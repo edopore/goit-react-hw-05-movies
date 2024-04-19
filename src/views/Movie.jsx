@@ -1,5 +1,5 @@
 import Search from 'components/search/Search';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchMovieByQuery } from 'utils/fetch-api';
 import { manageQuery } from 'utils/manageQuery';
