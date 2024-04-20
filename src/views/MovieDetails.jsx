@@ -1,7 +1,7 @@
 import Infobar from 'components/infobar/Infobar';
 import MovieInfo from 'components/movieInfo/MovieInfo';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import { fetchMoviesById } from 'utils/fetch-api';
 
 function MovieDetails() {
@@ -27,6 +27,8 @@ function MovieDetails() {
       <MovieInfo movieObject={movieData} genres={genre}></MovieInfo>
       <hr />
       <Infobar movieId={movieId}></Infobar>
+      <hr />
+      <Outlet></Outlet>
     </div>
   );
 }

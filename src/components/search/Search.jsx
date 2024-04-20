@@ -9,7 +9,7 @@ function Search({ query }) {
           className="form input"
           type="text"
           name="query"
-          placeholder="RIPD"
+          placeholder="RIPD..."
         />
         <button className="form submit-btn" type="submit">
           Search
