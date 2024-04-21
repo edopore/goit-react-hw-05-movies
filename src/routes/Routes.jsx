@@ -1,8 +1,6 @@
 import Navbar from 'components/navbar/Navbar';
 import { Home, Movie, MovieDetails } from '../views/';
 import { Navigate, createBrowserRouter } from 'react-router-dom';
-import Cast from 'components/cast/Cast';
-import Reviews from 'components/reviews/Reviews';
 
 const routes = createBrowserRouter([
   {
@@ -34,11 +32,17 @@ const routes = createBrowserRouter([
     children: [
       {
         path: '/movies/:movieId/cast',
-        element: <Cast></Cast>,
+        lazy: async () => {
+          const { Cast } = await import('components/cast/Cast');
+          return { Component: Cast };
+        },
       },
       {
         path: '/movies/:movieId/reviews',
-        element: <Reviews></Reviews>,
+        lazy: async () => {
+          const { Reviews } = await import('components/reviews/Reviews');
+          return { Component: Reviews };
+        },
       },
     ],
   },
