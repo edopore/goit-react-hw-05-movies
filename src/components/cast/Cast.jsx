@@ -1,15 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchActorPhoto, fetchMovieCast } from 'utils/fetch-api';
+import { fetchMovieCast } from 'utils/fetch-api';
 
 function Cast() {
   const movieId = useParams().movieId;
   const [castInfo, setCastInfo] = useState([]);
+
+  const addElement = newElem => {
+    setCastInfo(prevElem => {
+      console.log(prevElem);
+      return [...prevElem, newElem];
+    });
+  };
+
   useEffect(() => {
-    fetchMovieCast(movieId)
-      .then(cast => setCastInfo(cast))
-      .catch(error => console.error(error));
+    async function getData() {
+      const data = await fetchMovieCast(movieId);
+      data.map(async actor => addElement(await actor));
+    }
+    getData();
   }, [movieId]);
+
+  useEffect(() => {
+    return () => {};
+  });
   return (
     <div>
       <ul>
@@ -17,7 +31,7 @@ function Cast() {
           castInfo.map(actor => (
             <li key={actor.id}>
               <img
-                src={'https://api.themoviedb.org/3/person/'}
+                src={`https://image.tmdb.org/t/p/w500${actor.photo_url}`}
                 alt={actor.actor}
                 width="250px"
               />

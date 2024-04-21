@@ -53,16 +53,17 @@ export const fetchMovieCast = async movieId => {
       OPTIONS
     );
     const data = await response.json();
-    const cast = data.cast.map(character => {
+    const cast = data.cast.map(async character => {
+      const photo = await fetchActorPhoto(character.id);
       return {
         id: character.id,
         character: character.character,
         actor: character.name,
+        photo_url: photo,
       };
     });
     return cast;
   } catch (error) {
-    console.error(error);
     return [];
   }
 };
@@ -87,7 +88,7 @@ export async function fetchMovieReviews(movieId) {
   }
 }
 
-export async function fetchActorPhoto(actorId) {
+async function fetchActorPhoto(actorId) {
   try {
     const response = await fetch(
       URL_ACTOR_IMAGE + `${actorId}/images`,
@@ -96,7 +97,6 @@ export async function fetchActorPhoto(actorId) {
     const data = await response.json();
     return data.profiles[0].file_path;
   } catch (error) {
-    console.log(error);
-    return '';
+    return '/';
   }
 }
