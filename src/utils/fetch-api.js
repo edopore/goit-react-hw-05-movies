@@ -2,7 +2,6 @@ const URL_API =
   'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
 const URL_MOVIE_BASE = 'https://api.themoviedb.org/3/movie';
 const URL_MOVIE_QUERIES_BASE = 'https://api.themoviedb.org/3/search/movie';
-const URL_ACTOR_IMAGE = 'https://api.themoviedb.org/3/person/';
 const OPTIONS = {
   method: 'GET',
   headers: {
@@ -53,13 +52,12 @@ export const fetchMovieCast = async movieId => {
       OPTIONS
     );
     const data = await response.json();
-    const cast = data.cast.map(async character => {
-      const photo = await fetchActorPhoto(character.id);
+    const cast = data.cast.map(character => {
       return {
         id: character.id,
         character: character.character,
         actor: character.name,
-        photo_url: photo,
+        photo_url: character.profile_path,
       };
     });
     return cast;
@@ -85,18 +83,5 @@ export async function fetchMovieReviews(movieId) {
   } catch (error) {
     console.log(error);
     return [];
-  }
-}
-
-async function fetchActorPhoto(actorId) {
-  try {
-    const response = await fetch(
-      URL_ACTOR_IMAGE + `${actorId}/images`,
-      OPTIONS
-    );
-    const data = await response.json();
-    return data.profiles[0].file_path;
-  } catch (error) {
-    return '/';
   }
 }

@@ -6,17 +6,10 @@ function Cast() {
   const movieId = useParams().movieId;
   const [castInfo, setCastInfo] = useState([]);
 
-  const addElement = newElem => {
-    setCastInfo(prevElem => {
-      console.log(prevElem);
-      return [...prevElem, newElem];
-    });
-  };
-
   useEffect(() => {
     async function getData() {
       const data = await fetchMovieCast(movieId);
-      data.map(async actor => addElement(await actor));
+      setCastInfo(data);
     }
     getData();
   }, [movieId]);
@@ -31,7 +24,7 @@ function Cast() {
           castInfo.map(actor => (
             <li key={actor.id}>
               <img
-                src={`https://image.tmdb.org/t/p/w500${actor.photo_url}`}
+                src={`https://image.tmdb.org/t/p/w300${actor.photo_url}`}
                 alt={actor.actor}
                 width="250px"
               />

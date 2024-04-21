@@ -20,6 +20,7 @@ function Movie() {
     <div>
       <h2 className="title--main">Search Movie</h2>
       <Search query={handleQuery}></Search>
+
       {setMoviesArrayVisible && (
         <ul>
           {moviesArray.map(movie => (
